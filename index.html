@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <header class="masthead masthead-inline" role="banner">
@@ -213,6 +213,9 @@
             </div>
     </div>
     </header>
+    <a class="x-scroll-top right fade in" href="#bottom" title="Back to Bottom">
+        <i class="fa-solid fa-angle-down" data-x-icon=""></i>
+    </a>
     <div class="x-main full" role="main">
         <article id="post-64839" class="post-64839 page type-page status-publish hentry no-post-thumbnail">
           <div class="entry-content content">
@@ -484,14 +487,9 @@
         </div>
         </article>
     </div>
-    <a class="x-scroll-top right fade in" href="#top" title="Back to Top">
+    <!-- <a class="x-scroll-top right fade in" href="#top" title="Back to Top">
         <i class="x-icon-angle-up" data-x-icon=""></i>
-    </a>
-    <footer class="x-colophon top" role="contentinfo">
-        <div class="x-container max width">
-          <div class="x-column x-md x-1-1 last"></div>
-        </div>
-    </footer>
+    </a> -->
         <footer class="x-colophon bottom" role="contentinfo">
             <div class="x-container max width">
             <div class="su-row">
@@ -648,75 +646,59 @@
             </div>
             </div>
         </footer>
-        <div id="pop-up-custom" class="popup-banner">
-            <a class="cancel closing-pop" href="javascript:void(0)"></a>
-                <div class="popup" style="max-width: 1080px">
-            <a class="pop-up-close closing-pop" href="javascript:void(0)">×</a>
-            <div class="content">
-                <a href="https://account.tradersfamily.id/event/?utm_source=pop+up+website&amp;utm_medium=organic_image&amp;utm_campaign=program+&amp;utm_content=Event+TF+2023">
-                            <div>
-                    <img src="https://tradersfamily.id/wp-content/uploads/2023/11/pop_up_mata-trader_tutup-1.jpg" style="width: 100%"></div>
-                    <div>
-                    <div class="text-countdown">
-                        <div class="bgn">BEGINS IN</div>
-                        <div class="cal-countdown">
-                        <div class="dcont">
-                            <h3 class="ddays dtext">00</h3>
-                            <div class="dlabel">DAYS</div>
-                        </div>
-                        <div class="dcol">:</div>
-                        <div class="dcont">
-                            <h3 class="dhours dtext">00</h3>
-                            <div class="dlabel">HOURS</div>
-                        </div>
-                        <div class="dcol">:</div>
-                        <div class="dcont">
-                            <h3 class="dminute dtext">00</h3>
-                            <div class="dlabel">MINUTES</div>
-                        </div>
-                        <div class="dcol">:</div>
-                        <div class="dcont">
-                            <h3 class="dseconds dtext">00</h3>
-                            <div class="dlabel">SECONDS</div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </a>
-            </div>
-            </div>
-      </div>
       <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var scrollTopAnchor = document.querySelector('.x-scroll-top');
-
+        jQuery(document).ready(function($) {
+            var scrollToBottom = $('.x-scroll-top')
             function getScrollBottom() {
-                return document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
+                return $(document).height() - $(window).height() - $(window).scrollTop();
             }
-
             function sizingUpdate() {
-                var bodyOffsetTop = window.scrollY;
+                var bodyOffsetTop = $(window).scrollTop();
                 var bodyHeight = document.body.offsetHeight;
                 var bodyHeightAdjusted = bodyHeight - getScrollBottom();
 
-                if (bodyOffsetTop > (bodyHeightAdjusted * 0.5)) {
-                    scrollTopAnchor.classList.add('in');
+                if (bodyOffsetTop < (bodyHeightAdjusted * 0.5)) {
+                    scrollToBottom.addClass('in');
                 } else {
-                    scrollTopAnchor.classList.remove('in');
+                    scrollToBottom.removeClass('in');
                 }
             }
-
-            window.addEventListener('scroll', sizingUpdate);
-            window.addEventListener('resize', sizingUpdate);
+            $(window).bind('scroll', sizingUpdate).resize(sizingUpdate);
             sizingUpdate();
-
-            scrollTopAnchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+            scrollToBottom.click(function() {
+                $("html, body").animate({ scrollTop: $(document).height()-$(window).height() },"slow");
+                return false;
             });
-        });
+        })
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     var scrollTopAnchor = document.querySelector('.x-scroll-top');
 
-        
+        //     function getScrollBottom() {
+        //         return document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
+        //     }
+
+        //     function sizingUpdate() {
+        //         var bodyOffsetTop = window.scrollY;
+        //         var bodyHeight = document.body.offsetHeight;
+        //         var bodyHeightAdjusted = bodyHeight - getScrollBottom();
+
+        //         if (bodyOffsetTop > (bodyHeightAdjusted * 0.5)) {
+        //             scrollTopAnchor.classList.add('in');
+        //         } else {
+        //             scrollTopAnchor.classList.remove('in');
+        //         }
+        //     }
+
+        //     window.addEventListener('scroll', sizingUpdate);
+        //     window.addEventListener('resize', sizingUpdate);
+        //     sizingUpdate();
+
+        //     scrollTopAnchor.addEventListener('click', function (e) {
+        //         e.preventDefault();
+        //         window.scrollTo({ top: 0, behavior: "smooth" });
+        //     });
+        // });
+
         document.querySelectorAll(".menu-item").forEach(item => {
             item.addEventListener("mouseenter", function() {
                 this.classList.add("x-active");
