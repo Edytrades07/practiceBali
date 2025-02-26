@@ -695,7 +695,6 @@
             function goToSlide(index) {
                 if (index >= slides.length - 2){
                     currentIndex = 0;
-                    updatePagination();
                     slider.style.transition = "none"; 
                     slider.style.transform = `translateX(0)`;
                 }else {
