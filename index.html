@@ -5,8 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/custom.css">
+    <!-- <link rel="stylesheet" href="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"> -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    <!-- <meta name="viewport" content="width=500, initial-scale=1" /> -->
+    <meta name="viewport" content="interactive-widget=resizes-content" />
+     <!-- Bootstrap JS -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 <body>
     <header class="masthead masthead-inline" role="banner">
@@ -213,6 +222,10 @@
             </div>
     </div>
     </header>
+    <!-- *scroll to bottom -->
+    <a class="x-scroll-bottom right fade in" href="#bottom" title="Back to Bottom">
+        <i class="fa-solid fa-angle-down" data-x-icon=""></i>
+    </a>
     <div class="x-main full" role="main">
         <article id="post-64839" class="post-64839 page type-page status-publish hentry no-post-thumbnail">
           <div class="entry-content content">
@@ -239,7 +252,7 @@
                                             <li class="x-slide" data-thumb-alt="" style="width: 691.195px; margin-right: 0px; float: left; display: block;">
                                                 <img src="https://static2.tradersfamily.id/wp-content/uploads/2022/04/QnA-picture-4.png" alt="Placeholder" draggable="false">
                                             </li>
-                                            <li class="x-slide flex-active-slide" data-thumb-alt="" style="width: 691.195px; margin-right: 0px; float: left; display: block;">
+                                            <li class="x-slide flex-active-slide active" data-thumb-alt="" style="width: 691.195px; margin-right: 0px; float: left; display: block;">
                                                 <img src="https://static2.tradersfamily.id/wp-content/uploads/2022/04/QnA-picture-5.png" alt="Placeholder" draggable="false">
                                             </li>
                                             <li class="x-slide clone" aria-hidden="true" style="width: 691.195px; margin-right: 0px; float: left; display: block;">
@@ -484,6 +497,7 @@
         </div>
         </article>
     </div>
+    <!-- *scroll to top -->
     <a class="x-scroll-top right fade in" href="#top" title="Back to Top">
         <i class="x-icon-angle-up" data-x-icon=""></i>
     </a>
@@ -644,6 +658,32 @@
             </div>
         </footer>
       <script>
+        // *scroll to bottom
+        jQuery(document).ready(function($) {
+            var scrollToBottom = $('.x-scroll-bottom')
+            function getScrollBottom() {
+                return $(document).height() - $(window).height() - $(window).scrollTop();
+            }
+            function sizingUpdate() {
+                var bodyOffsetTop = $(window).scrollTop();
+                var bodyHeight = document.body.offsetHeight;
+                var bodyHeightAdjusted = bodyHeight - getScrollBottom();
+
+                if (bodyOffsetTop < (bodyHeightAdjusted * 0.5)) {
+                    scrollToBottom.addClass('in');
+                } else {
+                    scrollToBottom.removeClass('in');
+                }
+            }
+            $(window).bind('scroll', sizingUpdate).resize(sizingUpdate);
+            sizingUpdate();
+            scrollToBottom.click(function() {
+                $("html, body").animate({ scrollTop: $(document).height()-$(window).height() },"slow");
+                return false;
+            });
+        })
+
+        // *scroll to top
         document.addEventListener("DOMContentLoaded", function () {
             var scrollTopAnchor = document.querySelector('.x-scroll-top');
 
@@ -656,7 +696,7 @@
                 var bodyHeight = document.body.offsetHeight;
                 var bodyHeightAdjusted = bodyHeight - getScrollBottom();
 
-                if (bodyOffsetTop > (bodyHeightAdjusted * 0.5)) {
+                if (bodyOffsetTop > (bodyHeightAdjusted * 0.25)) {
                     scrollTopAnchor.classList.add('in');
                 } else {
                     scrollTopAnchor.classList.remove('in');
@@ -672,7 +712,6 @@
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
         });
-
         
         document.querySelectorAll(".menu-item").forEach(item => {
             item.addEventListener("mouseenter", function() {
@@ -682,7 +721,7 @@
                 this.classList.remove("x-active");
             });
         });
-        
+
         document.addEventListener("DOMContentLoaded", function () {
             const slider = document.querySelector("#web .x-slides");
             const slides = document.querySelectorAll(".x-slide");
